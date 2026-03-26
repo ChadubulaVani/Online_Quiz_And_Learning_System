@@ -1,0 +1,31 @@
+<div class="page">
+  <h1>Manage Courses</h1>
+
+  <!-- Add Course -->
+  <div class="form">
+    <input type="text" placeholder="Course Title" [(ngModel)]="title" />
+    <input type="text" placeholder="Category" [(ngModel)]="category" />
+    <button (click)="addCourse()">Add Course</button>
+  </div>
+
+  <!-- Course List -->
+  <table>
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Category</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let course of courses; let i = index">
+        <td>{{ course.title }}</td>
+        <td>{{ course.category }}</td>
+        <td>
+          <button (click)="deleteCourse(i)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

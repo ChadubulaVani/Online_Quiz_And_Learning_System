@@ -1,0 +1,148 @@
+<div class="homepage">
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="logo">Quiz<span>Learn</span></div>
+    <nav>
+      <a routerLink="/">Home</a>
+      <a routerLink="/categories">Categories</a>
+      <!-- <a routerLink="/contact">Contact</a> -->
+      <a routerLink="/login" class="btn-login">Login</a>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-text">
+        <h1>
+          Master New Skills with 
+          <span class="animated-text">Interactive Quizzes</span>
+        </h1>
+        <p>Learn at your own pace with engaging lessons and quizzes designed for you.</p>
+        <div class="hero-buttons">
+          <a routerLink="/register" class="btn-primary">Get Started</a>
+          <a routerLink="/categories" class="btn-secondary">Browse Categories</a>
+        </div>
+      </div>
+      <div class="hero-img">
+        <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Learning Illustration">
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features">
+    <h2>Why Choose QuizLearn?</h2>
+    <div class="feature-list">
+      <div class="feature-card">
+        <img src="https://cdn-icons-png.flaticon.com/512/3135/3135800.png" alt="Easy Learning">
+        <h3>Interactive Learning</h3>
+        <p>Engaging lessons and quizzes that make learning enjoyable and effective.</p>
+      </div>
+      <div class="feature-card">
+        <img src="https://cdn-icons-png.flaticon.com/512/2920/2920055.png" alt="Progress Tracking">
+        <h3>Track Progress</h3>
+        <p>Monitor your performance with personalized dashboards and reports.</p>
+      </div>
+      <div class="feature-card">
+        <img src="https://cdn-icons-png.flaticon.com/512/3135/3135823.png" alt="Certificates">
+        <h3>Certificates</h3>
+        <p>Earn certificates to showcase your skills and knowledge.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section class="how-it-works">
+    <h2>How It Works</h2>
+    <div class="steps">
+      <div class="step">
+        <h3>1. Register</h3>
+        <p>Create your free account in seconds.</p>
+      </div>
+      <div class="step">
+        <h3>2. Learn & Practice</h3>
+        <p>Explore lessons and attempt interactive quizzes.</p>
+      </div>
+      <div class="step">
+        <h3>3. Track & Improve</h3>
+        <p>See your progress and earn certificates.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Popular Categories -->
+  <section class="popular-categories">
+    <h2>Popular Categories</h2>
+    <div class="category-grid">
+      <div class="category-card">Technology Hub</div>
+      <div class="category-card">Soft Skills</div>
+      <div class="category-card">General Knowledge</div>
+      <div class="category-card">Awareness Programs</div>
+      <div class="category-card">Business & Management</div>
+      <div class="category-card">Health & Lifestyle</div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+<section class="faq">
+  <h2>Frequently Asked Questions</h2>
+
+  <div class="faq-list">
+    <div
+      class="faq-item"
+      *ngFor="let faq of faqs; let i = index"
+      [class.active]="faq.open"
+      (click)="toggleFAQ(i)"
+    >
+      <div class="faq-question">
+        <span>{{ faq.question }}</span>
+        <span class="faq-toggle">+</span>
+      </div>
+
+      <div class="faq-answer">
+        <p>{{ faq.answer }}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+  <!-- Testimonials -->
+  <section class="testimonials">
+    <h2>What Our Learners Say</h2>
+    <div class="testimonial-list">
+      <div class="testimonial">
+        <p>"QuizLearn helped me crack my placement tests!"</p>
+        <h4>— Deepthi, BCA</h4>
+      </div>
+      <div class="testimonial">
+        <p>"The quizzes are fun and super effective."</p>
+        <h4>— Priyanka, MCA</h4>
+      </div>
+      <div class="testimonial">
+        <p>"Best platform to practice daily."</p>
+        <h4>— Anjelina, B.Tech</h4>
+      </div>
+    </div>
+  </section>
+
+  <!-- Recent / Featured Quizzes -->
+  <section class="featured-quizzes">
+    <h2>Featured Quizzes</h2>
+    <div class="quiz-grid">
+      <div class="quiz-card">Angular Fundamentals</div>
+      <div class="quiz-card">Effective Communication Skills</div>
+      <div class="quiz-card">Basics of Entrepreneurship</div>
+      <div class="quiz-card">Women Empowerment & Gender Equality</div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 QuizLearn. All rights reserved.</p>
+    <p>Made with ❤️ for learners</p>
+  </footer>
+</div>

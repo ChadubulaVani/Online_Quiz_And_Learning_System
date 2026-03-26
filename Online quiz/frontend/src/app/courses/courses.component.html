@@ -1,0 +1,13 @@
+<div class="courses-container">
+  <h2 class="courses-title">Courses</h2>
+  <div class="courses-grid">
+    <div class="course-card" *ngFor="let course of courses">
+      <img [src]="course.image" [alt]="course.title">
+      <div class="course-content">
+        <h2>{{ course.title }}</h2>
+        <p>{{ course.description }}</p>
+        <a [routerLink]="['/courses', course._id]" class="course-btn">View Details</a>
+      </div>
+    </div>
+  </div>
+</div>

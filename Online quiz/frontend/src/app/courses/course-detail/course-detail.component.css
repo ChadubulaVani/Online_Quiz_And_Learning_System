@@ -1,0 +1,258 @@
+/* ================= Container ================= */
+.course-detail-container {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 25px;
+  display: grid;
+  gap: 25px;
+  font-family: 'Poppins', sans-serif;
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+/* ================= Header Card ================= */
+.course-header {
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
+  border-radius: 20px;
+  padding: 40px 30px;
+  text-align: center;
+  color: #fff;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.course-header:hover {
+  transform: scale(1.03);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+}
+.course-header h1 {
+  font-size: 2.8rem;
+  font-weight: 800;
+  margin-bottom: 12px;
+}
+.course-header p {
+  font-size: 1.25rem;
+  opacity: 0.9;
+}
+
+/* ================= Section Cards ================= */
+.section-card {
+  background: linear-gradient(145deg, #ffffff, #f3f4f6);
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+}
+.section-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+  background: linear-gradient(145deg, #e0f7fa, #fff9c4);
+}
+.section-card h2 {
+  font-size: 1.8rem;
+  margin-bottom: 25px;
+  color: #1a237e;
+  border-bottom: 3px solid #e0e0e0;
+  padding-bottom: 8px;
+  position: relative;
+}
+.section-card h2::after {
+  content: "";
+  width: 80px;
+  height: 5px;
+  background: linear-gradient(135deg, #ff8a00, #e52e71);
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  border-radius: 4px;
+}
+
+/* ================= Content List ================= */
+ul {
+  list-style: none;
+  padding: 0;
+}
+ul li {
+  padding: 12px 16px;
+  margin: 8px 0;
+  background: #fafafa;
+  border-radius: 12px;
+  color: #333;
+  font-weight: 500;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  cursor: pointer;
+}
+ul li:hover {
+  transform: translateX(5px) scale(1.02);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+  background: #e8f5e9;
+}
+
+/* ================= Video Cards ================= */
+.video-card {
+  margin-bottom: 25px;
+  padding: 20px;
+  border-radius: 18px;
+  background: linear-gradient(145deg, #ffffff, #f5f7fa);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.video-card:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+}
+.video-card h3 {
+  font-size: 1.4rem;
+  margin-bottom: 12px;
+  font-weight: 600;
+  color: #283593;
+}
+
+/* ================= Timer ================= */
+.timer {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #d32f2f;
+  margin-bottom: 15px;
+  position: relative;
+}
+.timer-bar {
+  width: 100%;
+  height: 15px;
+  background: #e0e0e0;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+.timer-bar-inner {
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(90deg, #ff8a00, #e52e71);
+  transition: width 1s linear;
+}
+
+/* ================= Quiz Questions ================= */
+.quiz-question {
+  margin-bottom: 25px;
+  padding: 20px;
+  border-radius: 15px;
+  background: linear-gradient(145deg, #ffffff, #f0f4f8);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.quiz-question:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 25px rgba(0,0,0,0.12);
+}
+.quiz-question p {
+  font-weight: 700;
+  font-size: 1.15rem;
+  margin-bottom: 12px;
+}
+.quiz-question ul li {
+  margin: 6px 0;
+  display: flex;
+  align-items: center;
+}
+.quiz-question ul li label {
+  cursor: pointer;
+  flex: 1;
+  padding: 8px 12px;
+  border-radius: 10px;
+  transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+  background: #f7f9fc;
+  display: flex;
+  align-items: center;
+}
+.quiz-question ul li label:hover {
+  transform: scale(1.02);
+  background: #e0f7fa;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+}
+
+/* Correct / Wrong Highlight */
+.quiz-question ul li.correct {
+  background: #c8e6c9 !important;
+  color: #2e7d32 !important;
+  font-weight: 600;
+}
+.quiz-question ul li.wrong {
+  background: #ffcdd2 !important;
+  color: #c62828 !important;
+  font-weight: 600;
+}
+.quiz-question ul li.correct::after {
+  content: " ✅";
+  margin-left: 6px;
+}
+.quiz-question ul li.wrong::after {
+  content: " ❌";
+  margin-left: 6px;
+}
+
+/* ================= Submit Button ================= */
+.quiz-submit-btn {
+  background: linear-gradient(135deg, #ff8a00, #e52e71);
+  border: none;
+  padding: 16px 30px;
+  border-radius: 15px;
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+.quiz-submit-btn:hover {
+  background: linear-gradient(135deg, #e52e71, #ff8a00);
+  transform: translateY(-3px) scale(1.02);
+}
+
+/* ================= Result Card ================= */
+.result-card {
+  max-width: 450px;
+  margin: 30px auto;
+  padding: 30px;
+  text-align: center;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #ff8a00, #e52e71);
+  color: #fff;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  animation: popIn 0.7s ease;
+}
+.result-card h2 {
+  font-size: 2.2rem;
+  margin-bottom: 15px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+.score-text {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+/* ================= Difficulty Dropdown ================= */
+select {
+  padding: 8px 14px;
+  margin-bottom: 20px;
+  border-radius: 12px;
+  border: 2px solid #ccc;
+  font-size: 1rem;
+  cursor: pointer;
+  font-weight: 600;
+  transition: border 0.2s ease, box-shadow 0.2s ease;
+}
+select:hover {
+  border-color: #ff8a00;
+  box-shadow: 0 0 10px rgba(255,138,0,0.3);
+}
+
+/* ================= Animations ================= */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes popIn {
+  0% { transform: scale(0.7); opacity: 0; }
+  70% { transform: scale(1.05); opacity: 1; }
+  100% { transform: scale(1); }
+}

@@ -1,0 +1,72 @@
+<div class="admin-page">
+  <header class="topbar">
+    <div>
+      <p class="eyebrow">Admin Workspace</p>
+      <h1>Welcome back, {{ adminName }}</h1>
+    </div>
+
+    <div class="topbar-right">
+      <span class="status-chip">Active Session</span>
+      <button class="logout-btn" (click)="logout()">Logout</button>
+    </div>
+  </header>
+
+  <section class="hero-section">
+    <div class="hero-left">
+      <h2>Platform overview at a glance</h2>
+      <p>
+        Manage users, courses, quizzes, and categories from one clean control space.
+      </p>
+    </div>
+
+    <div class="hero-right">
+      <div class="mini-box">
+        <span>Today</span>
+        <strong>Admin Control</strong>
+      </div>
+    </div>
+  </section>
+
+  <section class="stats-row">
+    <div class="stat-tile" *ngFor="let stat of stats">
+      <p>{{ stat.title }}</p>
+      <h3>{{ stat.value }}</h3>
+    </div>
+  </section>
+
+  <section class="content-grid">
+    <div class="main-panel">
+      <div class="section-head">
+        <h2>Quick Actions</h2>
+        <p>Choose what you want to manage</p>
+      </div>
+
+      <div class="actions-list">
+        <div class="action-strip" *ngFor="let action of quickActions">
+          <div>
+            <h3>{{ action.title }}</h3>
+            <p>{{ action.desc }}</p>
+          </div>
+          <button [routerLink]="action.route">Open</button>
+          
+        </div>
+      </div>
+    </div>
+
+    <div class="side-panel">
+      <div class="info-card">
+        <h2>Recent Activity</h2>
+        <ul>
+          <li *ngFor="let activity of recentActivities">{{ activity }}</li>
+        </ul>
+      </div>
+
+      <div class="info-card soft-highlight">
+        <h2>System Note</h2>
+        <p>
+          All key modules are available and ready for admin operations.
+        </p>
+      </div>
+    </div>
+  </section>
+</div>

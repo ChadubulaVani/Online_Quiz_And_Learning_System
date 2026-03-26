@@ -1,0 +1,29 @@
+<header class="navbar">
+    <div class="logo">Quiz<span>Learn</span></div>
+    <nav>
+      <a routerLink="/">Home</a>
+      <a routerLink="/categories">Categories</a>
+      <!-- <a routerLink="/contact">Contact</a> -->
+      <a routerLink="/login" class="btn-login">Login</a>
+    </nav>
+  </header>
+<div class="main">
+<div class="container mt-4">
+  <h2 class="text-center mb-4">Explore Categories</h2>
+  <div class="row">
+    <div class="col-md-4 mb-3" *ngFor="let cat of categories">
+      <div class="card h-100">
+        <img [src]="cat.image" class="card-img-top" [alt]="cat.name">
+        <div class="card-body">
+          <h5 class="card-title">{{ cat.name }}</h5>
+          <p class="card-text">{{ cat.description }}</p>
+          <a [routerLink]="['/categories', cat._id]" class="btn btn-primary">
+  View Courses
+</a>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
