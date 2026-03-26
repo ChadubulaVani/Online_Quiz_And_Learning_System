@@ -75,8 +75,8 @@ online-quiz-system/
 
 ### 🔹 1. Clone Repository
 ```bash
-git clone https://github.com/your-username/online-quiz-system.git
-cd online-quiz-system
+git clone https://github.com/ChadubulaVani/Online_Quiz_And_Learning_System
+cd onlinequiz
 
 1. Backend Setup
 cd backend
