@@ -15,18 +15,20 @@ export class QuizService {
   }
 
   submitQuiz(
-    courseId: string,
-    answers: (number | null)[],
-    timeTaken: number,
-    userId: string
-  ): Observable<any> {
-    return this.http.post(`${this.baseUrl}/submit`, {
-      courseId,
-      answers,
-      timeTaken,
-      userId
-    });
-  }
+  courseId: string,
+  answers: (number | null)[],
+  timeTaken: number,
+  userId: string,
+  level: string
+): Observable<any> {
+  return this.http.post(`${this.baseUrl}/submit`, {
+    courseId,
+    answers,
+    timeTaken,
+    userId,
+    level
+  });
+}
 
   getLeaderboard(courseId: string): Observable<any> {
     return this.http.get(`${this.baseUrl}/leaderboard/${courseId}`);
