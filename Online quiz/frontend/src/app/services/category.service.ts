@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class CategoryService {
-  private apiUrl = 'https://online-quiz-and-learning-system.onrender.com/';
+  private apiUrl = 'https://online-quiz-and-learning-system.onrender.com/api/categories';
 
   constructor(private http: HttpClient) {}
 
