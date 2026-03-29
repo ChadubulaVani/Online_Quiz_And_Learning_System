@@ -12,6 +12,7 @@ import { AdminDashboardComponent } from './app/modules/admin/admin-dashboard/adm
 import { ManageUsersComponent } from './app/modules/admin/manage-users/manage-users.component';
 import { ManageCoursesComponent } from './app/modules/admin/manage-courses/manage-courses.component';
 import { ManageQuizzesComponent } from './app/modules/admin/manage-quizzes/manage-quizzes.component';
+import { authGuard } from './app/guards/auth.guard';
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -20,19 +21,16 @@ bootstrapApplication(AppComponent, {
       { path: 'login', component: LoginComponent },
       { path: 'register', component: RegisterComponent },
 
-      // ✅ Admin
       { path: 'admin-dashboard', component: AdminDashboardComponent },
       { path: 'manage-users', component: ManageUsersComponent },
       { path: 'manage-courses', component: ManageCoursesComponent },
       { path: 'manage-quizzes', component: ManageQuizzesComponent },
 
-      // ✅ Categories
-      { path: 'categories', component: CategoriesComponent },
-      { path: 'categories/:id', component: CourseComponent },
+      { path: 'categories', component: CategoriesComponent, canActivate: [authGuard] },
+      { path: 'categories/:id', component: CourseComponent, canActivate: [authGuard] },
 
-      // ✅ Courses
-      { path: 'courses', component: CourseComponent },
-      { path: 'courses/:id', component: CourseDetailComponent },
+      { path: 'courses', component: CourseComponent, canActivate: [authGuard] },
+      { path: 'courses/:id', component: CourseDetailComponent, canActivate: [authGuard] },
 
       { path: '**', redirectTo: '' }
     ]),
