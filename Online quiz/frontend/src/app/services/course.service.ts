@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class CourseService {
-  private apiUrl = 'https://online-quiz-and-learning-system.onrender.com/';
+  private apiUrl = 'https://online-quiz-and-learning-system.onrender.com/api/courses';
 
   constructor(private http: HttpClient) {}
 
