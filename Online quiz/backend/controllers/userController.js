@@ -14,10 +14,8 @@ export const registerUser = async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Default role for public registration
     let assignedRole = "student";
 
-    // Only your secret admin email becomes admin
     if (
       process.env.ADMIN_EMAIL &&
       email.toLowerCase() === process.env.ADMIN_EMAIL.toLowerCase()
@@ -63,6 +61,10 @@ export const loginUser = async (req, res) => {
       return res.status(400).json({ message: "Invalid email or password" });
     }
 
+    if (!process.env.JWT_SECRET) {
+      return res.status(500).json({ message: "JWT_SECRET is missing in environment variables" });
+    }
+
     const token = jwt.sign(
       { id: user._id, role: user.role },
       process.env.JWT_SECRET,
@@ -96,6 +98,33 @@ export const getProfile = async (req, res) => {
       email: req.user.email,
       role: req.user.role
     });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// GET ALL USERS
+export const getAllUsers = async (req, res) => {
+  try {
+    const users = await User.find().select("-password").sort({ createdAt: -1 });
+    res.json(users);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// DELETE USER
+export const deleteUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const deletedUser = await User.findByIdAndDelete(id);
+
+    if (!deletedUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.json({ message: "User deleted successfully" });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
