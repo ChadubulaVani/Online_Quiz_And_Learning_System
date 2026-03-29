@@ -10,10 +10,6 @@ export class QuizService {
 
   constructor(private http: HttpClient) {}
 
-  getQuiz(courseId: string): Observable<any> {
-    return this.http.get(`${this.baseUrl}/${courseId}`);
-  }
-
   getQuizByCourse(courseId: string, level: string = 'Easy'): Observable<any> {
     return this.http.get(`${this.baseUrl}/${courseId}?level=${level}`);
   }
