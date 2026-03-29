@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Router } from '@angular/router';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [CommonModule, FormsModule, RouterModule, HttpClientModule],
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
@@ -16,7 +17,12 @@ export class RegisterComponent {
   password: string = '';
   confirmPassword: string = '';
 
-  constructor(private router: Router) {}
+  private baseUrl = 'https://online-quiz-and-learning-system.onrender.com/api/users';
+
+  constructor(
+    private router: Router,
+    private http: HttpClient
+  ) {}
 
   onRegister() {
     this.name = this.name.trim();
@@ -37,36 +43,25 @@ export class RegisterComponent {
       return;
     }
 
-    let users = JSON.parse(localStorage.getItem('users') || '[]');
-
-    const existingUser = users.find(
-      (u: any) => u.email.toLowerCase() === this.email.toLowerCase()
-    );
-
-    if (existingUser) {
-      alert('⚠️ Email already registered!');
-      return;
-    }
-
-    // ✅ Added role here
-    const newUser = {
+    this.http.post<any>(`${this.baseUrl}/register`, {
       name: this.name,
       email: this.email,
-      password: this.password,
-      role: 'admin' // default role
-    };
+      password: this.password
+    }).subscribe({
+      next: () => {
+        alert('🎉 Registration successful! Please login.');
 
-    users.push(newUser);
+        this.name = '';
+        this.email = '';
+        this.password = '';
+        this.confirmPassword = '';
 
-    localStorage.setItem('users', JSON.stringify(users));
-
-    alert('🎉 Registration successful! Please login.');
-
-    this.name = '';
-    this.email = '';
-    this.password = '';
-    this.confirmPassword = '';
-
-    this.router.navigate(['/login']);
+        this.router.navigate(['/login']);
+      },
+      error: (err) => {
+        console.error('Register error:', err);
+        alert(err.error?.message || '❌ Registration failed');
+      }
+    });
   }
 }
