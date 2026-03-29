@@ -4,8 +4,7 @@
     <div class="logo">Quiz<span>Learn</span></div>
     <nav>
       <a routerLink="/">Home</a>
-      <a routerLink="/categories">Categories</a>
-      <!-- <a routerLink="/contact">Contact</a> -->
+      <a (click)="goToCategories()">Categories</a>
       <a routerLink="/login" class="btn-login">Login</a>
     </nav>
   </header>
@@ -21,7 +20,7 @@
         <p>Learn at your own pace with engaging lessons and quizzes designed for you.</p>
         <div class="hero-buttons">
           <a routerLink="/register" class="btn-primary">Get Started</a>
-          <a routerLink="/categories" class="btn-secondary">Browse Categories</a>
+          <a (click)="goToCategories()" class="btn-secondary">Browse Categories</a>
         </div>
       </div>
       <div class="hero-img">
@@ -35,17 +34,17 @@
     <h2>Why Choose QuizLearn?</h2>
     <div class="feature-list">
       <div class="feature-card">
-        <img src="https://cdn-icons-png.flaticon.com/512/3135/3135800.png" alt="Easy Learning">
+        <img src="https://cdn-icons-png.flaticon.com/512/3135/3135800.png">
         <h3>Interactive Learning</h3>
         <p>Engaging lessons and quizzes that make learning enjoyable and effective.</p>
       </div>
       <div class="feature-card">
-        <img src="https://cdn-icons-png.flaticon.com/512/2920/2920055.png" alt="Progress Tracking">
+        <img src="https://cdn-icons-png.flaticon.com/512/2920/2920055.png">
         <h3>Track Progress</h3>
         <p>Monitor your performance with personalized dashboards and reports.</p>
       </div>
       <div class="feature-card">
-        <img src="https://cdn-icons-png.flaticon.com/512/3135/3135823.png" alt="Certificates">
+        <img src="https://cdn-icons-png.flaticon.com/512/3135/3135823.png">
         <h3>Certificates</h3>
         <p>Earn certificates to showcase your skills and knowledge.</p>
       </div>
@@ -84,31 +83,26 @@
     </div>
   </section>
 
-  <!-- FAQ Section -->
-<section class="faq">
-  <h2>Frequently Asked Questions</h2>
-
-  <div class="faq-list">
-    <div
-      class="faq-item"
-      *ngFor="let faq of faqs; let i = index"
-      [class.active]="faq.open"
-      (click)="toggleFAQ(i)"
-    >
-      <div class="faq-question">
-        <span>{{ faq.question }}</span>
-        <span class="faq-toggle">+</span>
-      </div>
-
-      <div class="faq-answer">
-        <p>{{ faq.answer }}</p>
+  <!-- FAQ -->
+  <section class="faq">
+    <h2>Frequently Asked Questions</h2>
+    <div class="faq-list">
+      <div
+        class="faq-item"
+        *ngFor="let faq of faqs; let i = index"
+        [class.active]="faq.open"
+        (click)="toggleFAQ(i)"
+      >
+        <div class="faq-question">
+          <span>{{ faq.question }}</span>
+          <span class="faq-toggle">+</span>
+        </div>
+        <div class="faq-answer">
+          <p>{{ faq.answer }}</p>
+        </div>
       </div>
     </div>
-  </div>
-</section>
-
-
-
+  </section>
 
   <!-- Testimonials -->
   <section class="testimonials">
@@ -129,7 +123,7 @@
     </div>
   </section>
 
-  <!-- Recent / Featured Quizzes -->
+  <!-- Featured -->
   <section class="featured-quizzes">
     <h2>Featured Quizzes</h2>
     <div class="quiz-grid">
