@@ -114,7 +114,7 @@ export class CourseDetailComponent implements OnInit, OnDestroy {
     clearInterval(this.interval);
 
     this.quizService
-      .submitQuiz(this.courseId, this.selectedAnswers, timeTaken, userId)
+      .submitQuiz(this.courseId, this.selectedAnswers, timeTaken, userId, this.selectedLevel)
       .subscribe({
         next: (res: any) => {
           this.result = res;
