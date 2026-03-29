@@ -14,8 +14,8 @@ import { SafeUrlPipe } from '../../safe-url-pipe';
   styleUrls: ['./course-detail.component.css']
 })
 export class CourseDetailComponent implements OnInit, OnDestroy {
-  course: any;
-  courseId!: string;
+  course: any = null;
+  courseId: string = '';
 
   quiz: any = null;
   selectedAnswers: (number | null)[] = [];
@@ -25,6 +25,7 @@ export class CourseDetailComponent implements OnInit, OnDestroy {
   interval: any;
 
   correctAnswers: number = 0;
+  totalQuestions: number = 0;
 
   constructor(
     private route: ActivatedRoute,
@@ -47,7 +48,7 @@ export class CourseDetailComponent implements OnInit, OnDestroy {
         this.course = res;
         this.loadQuiz();
       },
-      error: (err) => {
+      error: (err: any) => {
         console.error('Error fetching course:', err);
       }
     });
@@ -58,24 +59,28 @@ export class CourseDetailComponent implements OnInit, OnDestroy {
       next: (res: any) => {
         if (res && res.questions && res.questions.length > 0) {
           this.quiz = res;
-          this.selectedAnswers = new Array(this.quiz.questions.length).fill(null);
+          this.totalQuestions = this.quiz.questions.length;
+          this.selectedAnswers = new Array(this.totalQuestions).fill(null);
           this.result = null;
           this.correctAnswers = 0;
           this.startTimer(600);
         } else {
           this.quiz = null;
+          this.totalQuestions = 0;
           this.selectedAnswers = [];
           this.result = null;
           this.correctAnswers = 0;
           clearInterval(this.interval);
         }
       },
-      error: (err) => {
+      error: (err: any) => {
         console.error('Error loading quiz:', err);
         this.quiz = null;
+        this.totalQuestions = 0;
         this.selectedAnswers = [];
         this.result = null;
         this.correctAnswers = 0;
+        clearInterval(this.interval);
       }
     });
   }
@@ -99,7 +104,9 @@ export class CourseDetailComponent implements OnInit, OnDestroy {
   }
 
   submitQuiz(): void {
-    if (!this.quiz) return;
+    if (!this.quiz || !this.quiz.questions?.length) {
+      return;
+    }
 
     const userId = '66cbbd8123a7b25df98e5678';
 
@@ -112,6 +119,7 @@ export class CourseDetailComponent implements OnInit, OnDestroy {
     clearInterval(this.interval);
 
     let correct = 0;
+
     this.quiz.questions.forEach((question: any, index: number) => {
       if (this.selectedAnswers[index] === question.correctAnswer) {
         correct++;
@@ -119,6 +127,7 @@ export class CourseDetailComponent implements OnInit, OnDestroy {
     });
 
     this.correctAnswers = correct;
+    this.totalQuestions = this.quiz.questions.length;
 
     this.quizService
       .submitQuiz(
@@ -130,9 +139,19 @@ export class CourseDetailComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (res: any) => {
           this.result = res;
-          this.selectedAnswers = res.review.map((r: any) => r.yourAnswer);
+
+          if (res?.review?.length) {
+            this.selectedAnswers = res.review.map((r: any) => r.yourAnswer);
+          }
+
+          if (typeof res?.score === 'number' && typeof res?.total === 'number') {
+            this.correctAnswers = res.score;
+            this.totalQuestions = res.total;
+          }
         },
-        error: (err) => console.error('Error submitting quiz:', err)
+        error: (err: any) => {
+          console.error('Error submitting quiz:', err);
+        }
       });
   }
 
