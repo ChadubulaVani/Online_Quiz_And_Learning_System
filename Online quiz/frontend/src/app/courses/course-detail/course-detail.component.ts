@@ -144,10 +144,8 @@ export class CourseDetailComponent implements OnInit, OnDestroy {
             this.selectedAnswers = res.review.map((r: any) => r.yourAnswer);
           }
 
-          if (typeof res?.score === 'number' && typeof res?.total === 'number') {
-            this.correctAnswers = res.score;
-            this.totalQuestions = res.total;
-          }
+          // do not set correctAnswers from backend score
+          // backend may return float like 6.25
         },
         error: (err: any) => {
           console.error('Error submitting quiz:', err);
