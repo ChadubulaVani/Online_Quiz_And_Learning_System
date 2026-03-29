@@ -14,8 +14,8 @@ export class QuizService {
     return this.http.get(`${this.baseUrl}/${courseId}`);
   }
 
-  getQuizByCourse(courseId: string): Observable<any> {
-    return this.http.get(`${this.baseUrl}/${courseId}`);
+  getQuizByCourse(courseId: string, level: string = 'Easy'): Observable<any> {
+    return this.http.get(`${this.baseUrl}/${courseId}?level=${level}`);
   }
 
   submitQuiz(
