@@ -34,7 +34,7 @@ export class CourseDetailComponent implements OnInit {
 
   ngOnInit(): void {
     const courseParam = this.route.snapshot.paramMap.get('id')!;
-    this.quizService.getQuizByCourse(this.courseId, this.selectedLevel).subscribe({
+    this.quizService.getQuizByCourse(this.courseId).subscribe({
       next: (res: any) => {
         this.course = res;
         this.courseId = res._id;
