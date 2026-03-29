@@ -34,7 +34,7 @@ export class HomeComponent {
   question: '4. How can I improve my quiz scores?',
   answer: "Practice regularly, review your answers, and focus on weak areas to improve your performance.",
   open: false
-}
+},
     {
       question: '5. Can I share quizzes with friends?',
       answer: "Definitely! You can share quizzes via social media or copy links to challenge your friends and peers.",
