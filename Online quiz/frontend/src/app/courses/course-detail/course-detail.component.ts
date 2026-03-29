@@ -45,7 +45,7 @@ export class CourseDetailComponent implements OnInit {
   }
 
   loadQuiz(): void {
-    this.quizService.getQuizByCourse(this.courseId, this.selectedLevel).subscribe({
+    tthis.quizService.getQuizByCourse(this.courseId).subscribe({
       next: (res: any) => {
         if (res && res.questions && res.questions.length > 0) {
           this.quiz = res;
