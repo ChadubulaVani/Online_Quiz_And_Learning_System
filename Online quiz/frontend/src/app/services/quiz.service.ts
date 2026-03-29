@@ -10,23 +10,21 @@ export class QuizService {
 
   constructor(private http: HttpClient) {}
 
-  getQuizByCourse(courseId: string, level: string = 'Easy'): Observable<any> {
-    return this.http.get(`${this.baseUrl}/${courseId}?level=${level}`);
+  getQuizByCourse(courseId: string): Observable<any> {
+    return this.http.get(`${this.baseUrl}/${courseId}`);
   }
 
   submitQuiz(
     courseId: string,
     answers: (number | null)[],
     timeTaken: number,
-    userId: string,
-    level: string
+    userId: string
   ): Observable<any> {
     return this.http.post(`${this.baseUrl}/submit`, {
       courseId,
       answers,
       timeTaken,
-      userId,
-      level
+      userId
     });
   }
 
