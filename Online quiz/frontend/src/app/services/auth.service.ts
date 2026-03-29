@@ -7,19 +7,31 @@ export class AuthService {
 
   constructor() { }
 
-  // Set logged-in user (after login)
-  setUser(user: { id: string; name: string; email: string }) {
+  setUser(user: { id: string; name: string; email: string; role: string }) {
     localStorage.setItem('user', JSON.stringify(user));
   }
 
-  // Get logged-in user
-  getUser(): { id: string; name: string; email: string } | null {
+  getUser(): { id: string; name: string; email: string; role: string } | null {
     const user = localStorage.getItem('user');
     return user ? JSON.parse(user) : null;
   }
 
-  // Remove user on logout
+  getRole(): string | null {
+    return localStorage.getItem('role');
+  }
+
+  getToken(): string | null {
+    return localStorage.getItem('token');
+  }
+
   logout() {
     localStorage.removeItem('user');
+    localStorage.removeItem('role');
+    localStorage.removeItem('token');
+    localStorage.removeItem('loggedInUser');
+  }
+
+  isLoggedIn(): boolean {
+    return !!localStorage.getItem('token');
   }
 }
