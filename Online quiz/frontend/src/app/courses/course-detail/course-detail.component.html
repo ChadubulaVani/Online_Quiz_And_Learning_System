@@ -1,5 +1,4 @@
 <div class="course-detail-container" *ngIf="course">
-
   <div class="course-header">
     <h1>{{ course.title }}</h1>
     <p>{{ course.description }}</p>
@@ -42,8 +41,8 @@
               [name]="'question-' + i"
               [checked]="selectedAnswers[i] === j"
               (change)="selectAnswer(i, j)"
-              [disabled]="result"
-            >
+              [disabled]="!!result"
+            />
             {{ option }}
 
             <span *ngIf="result">
@@ -55,7 +54,7 @@
       </ul>
     </div>
 
-    <button class="quiz-submit-btn" (click)="submitQuiz()" [disabled]="result">
+    <button class="quiz-submit-btn" (click)="submitQuiz()" [disabled]="!!result">
       Submit Quiz
     </button>
   </section>
@@ -64,9 +63,8 @@
     <div class="result-card">
       <h2>Quiz Completed! 🎉</h2>
       <p class="score-text">
-        <strong>Your Score:</strong> {{ correctAnswers }}/{{ quiz.questions.length }}
+        <strong>Your Score:</strong> {{ correctAnswers }}/{{ totalQuestions }}
       </p>
     </div>
   </section>
-
 </div>
