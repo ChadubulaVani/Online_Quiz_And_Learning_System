@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -20,8 +19,7 @@ export class LoginComponent {
 
   constructor(
     private router: Router,
-    private http: HttpClient,
-    private authService: AuthService
+    private http: HttpClient
   ) {}
 
   onLogin() {
@@ -43,8 +41,7 @@ export class LoginComponent {
         localStorage.setItem('token', res.token);
         localStorage.setItem('role', res.user.role);
         localStorage.setItem('loggedInUser', JSON.stringify(res.user));
-
-        this.authService.setUser(res.user);
+        localStorage.setItem('user', JSON.stringify(res.user));
 
         if (res.user.role === 'admin') {
           this.router.navigateByUrl('/admin-dashboard');
