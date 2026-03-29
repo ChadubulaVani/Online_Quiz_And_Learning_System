@@ -30,13 +30,6 @@
   <section class="section-card" *ngIf="quiz?.questions?.length">
     <h2>Quiz</h2>
 
-    <label>Difficulty Level:</label>
-    <select [(ngModel)]="selectedLevel" (change)="onLevelChange()">
-      <option>Easy</option>
-      <option>Medium</option>
-      <option>Hard</option>
-    </select>
-
     <p *ngIf="!result">⏲ Time Left: {{ timer }} seconds</p>
 
     <div *ngFor="let question of quiz.questions; let i = index" class="quiz-question">
@@ -62,14 +55,16 @@
       </ul>
     </div>
 
-    <button class="quiz-submit-btn" (click)="submitQuiz()" [disabled]="result">Submit Quiz</button>
+    <button class="quiz-submit-btn" (click)="submitQuiz()" [disabled]="result">
+      Submit Quiz
+    </button>
   </section>
 
   <section class="section-card" *ngIf="result">
     <div class="result-card">
-      <h2>Quiz Completed!🎉</h2>
+      <h2>Quiz Completed! 🎉</h2>
       <p class="score-text">
-        <strong>Your Score:</strong> {{ result.score }} / {{ result.total }}
+        <strong>Your Score:</strong> {{ correctAnswers }}/{{ quiz.questions.length }}
       </p>
     </div>
   </section>
