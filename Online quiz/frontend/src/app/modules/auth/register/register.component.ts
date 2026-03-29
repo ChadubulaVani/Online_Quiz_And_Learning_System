@@ -24,10 +24,11 @@ export class RegisterComponent {
     private http: HttpClient
   ) {}
 
-  onRegister() {
+  onRegister(): void {
     this.name = this.name.trim();
     this.email = this.email.trim();
 
+    // Validation
     if (!this.name || !this.email || !this.password || !this.confirmPassword) {
       alert('⚠️ Please fill all fields!');
       return;
@@ -43,19 +44,22 @@ export class RegisterComponent {
       return;
     }
 
+    // API Call
     this.http.post<any>(`${this.baseUrl}/register`, {
       name: this.name,
       email: this.email,
       password: this.password
     }).subscribe({
-      next: () => {
+      next: (res) => {
         alert('🎉 Registration successful! Please login.');
 
+        // Reset form
         this.name = '';
         this.email = '';
         this.password = '';
         this.confirmPassword = '';
 
+        // Redirect
         this.router.navigate(['/login']);
       },
       error: (err) => {
