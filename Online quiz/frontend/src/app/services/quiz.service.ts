@@ -6,9 +6,14 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class QuizService {
-  private baseUrl = 'https://online-quiz-and-learning-system.onrender.com/api/quizzes/${courseId}';
+  private baseUrl = 'https://online-quiz-and-learning-system.onrender.com/api/quizzes';
 
   constructor(private http: HttpClient) {}
+
+  getQuiz(courseId: string) {
+    return this.http.get(`${this.baseUrl}/${courseId}`);
+  }
+}
 
   getQuizByCourse(courseId: string, level: string = 'Easy'): Observable<any> {
     return this.http.get(`${this.baseUrl}/${courseId}?level=${level}`);
