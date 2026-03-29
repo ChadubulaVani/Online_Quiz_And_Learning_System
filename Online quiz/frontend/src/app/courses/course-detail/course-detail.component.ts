@@ -21,7 +21,7 @@ export class CourseDetailComponent implements OnInit, OnDestroy {
   selectedAnswers: (number | null)[] = [];
   result: any = null;
 
-  timer: number = 600; // 10 minutes default
+  timer: number = 600;
   interval: any;
 
   selectedLevel: string = 'Easy';
@@ -103,18 +103,24 @@ export class CourseDetailComponent implements OnInit, OnDestroy {
   submitQuiz(): void {
     if (!this.quiz) return;
 
-    const userId = '66cbbd8123a7b25df98e5678'; // replace with logged-in user
+    const userId = '66cbbd8123a7b25df98e5678';
 
     if (this.selectedAnswers.includes(null)) {
       alert('Please answer all questions before submitting.');
       return;
     }
 
-    const timeTaken = 600 - this.timer;
+    const timeTaken = Math.max(0, 600 - this.timer);
     clearInterval(this.interval);
 
     this.quizService
-      .submitQuiz(this.courseId, this.selectedAnswers, timeTaken, userId, this.selectedLevel)
+      .submitQuiz(
+        this.courseId,
+        this.selectedAnswers,
+        timeTaken,
+        userId,
+        this.selectedLevel
+      )
       .subscribe({
         next: (res: any) => {
           this.result = res;
