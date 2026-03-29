@@ -2,11 +2,13 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [CommonModule, FormsModule, RouterModule, HttpClientModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
@@ -14,7 +16,13 @@ export class LoginComponent {
   email: string = '';
   password: string = '';
 
-  constructor(private router: Router) {}
+  private baseUrl = 'https://online-quiz-and-learning-system.onrender.com/api/users';
+
+  constructor(
+    private router: Router,
+    private http: HttpClient,
+    private authService: AuthService
+  ) {}
 
   onLogin() {
     this.email = this.email.trim();
@@ -25,29 +33,29 @@ export class LoginComponent {
       return;
     }
 
-    const users = JSON.parse(localStorage.getItem('users') || '[]');
+    this.http.post<any>(`${this.baseUrl}/login`, {
+      email: this.email,
+      password: this.password
+    }).subscribe({
+      next: (res) => {
+        alert(`Welcome back, ${res.user.name}! ✅`);
 
-    const user = users.find(
-      (u: any) =>
-        u.email.toLowerCase() === this.email.toLowerCase() &&
-        u.password === this.password
-    );
+        localStorage.setItem('token', res.token);
+        localStorage.setItem('role', res.user.role);
+        localStorage.setItem('loggedInUser', JSON.stringify(res.user));
 
-    if (user) {
-      console.log('Logged in user:', user);
+        this.authService.setUser(res.user);
 
-      alert(`Welcome back, ${user.name}! ✅`);
-
-      localStorage.setItem('loggedInUser', JSON.stringify(user));
-      localStorage.setItem('role', user.role || 'student');
-
-      if (user.role === 'admin') {
-        this.router.navigateByUrl('/admin-dashboard');
-      } else {
-        this.router.navigateByUrl('/');
+        if (res.user.role === 'admin') {
+          this.router.navigateByUrl('/admin-dashboard');
+        } else {
+          this.router.navigateByUrl('/categories');
+        }
+      },
+      error: (err) => {
+        console.error('Login error:', err);
+        alert(err.error?.message || '❌ Invalid Email or Password');
       }
-    } else {
-      alert('❌ Invalid Email or Password');
-    }
+    });
   }
 }
