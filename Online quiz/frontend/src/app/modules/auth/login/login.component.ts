@@ -22,7 +22,7 @@ export class LoginComponent {
     private http: HttpClient
   ) {}
 
-  onLogin() {
+  onLogin(): void {
     this.email = this.email.trim();
     this.password = this.password.trim();
 
