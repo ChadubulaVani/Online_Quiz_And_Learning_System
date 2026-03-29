@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -13,7 +13,7 @@ import { SafeUrlPipe } from '../../safe-url-pipe';
   templateUrl: './course-detail.component.html',
   styleUrls: ['./course-detail.component.css']
 })
-export class CourseDetailComponent implements OnInit {
+export class CourseDetailComponent implements OnInit, OnDestroy {
   course: any;
   courseId!: string;
 
@@ -33,34 +33,46 @@ export class CourseDetailComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const courseParam = this.route.snapshot.paramMap.get('id')!;
-    this.quizService.getQuizByCourse(this.courseId).subscribe({
+    const courseParam = this.route.snapshot.paramMap.get('id');
+
+    if (!courseParam) {
+      console.error('Course ID not found in route');
+      return;
+    }
+
+    this.courseId = courseParam;
+
+    this.courseService.getCourseById(this.courseId).subscribe({
       next: (res: any) => {
         this.course = res;
-        this.courseId = res._id;
         this.loadQuiz();
       },
-      error: (err) => console.error('Error fetching course:', err)
+      error: (err) => {
+        console.error('Error fetching course:', err);
+      }
     });
   }
 
   loadQuiz(): void {
-    this.quizService.getQuizByCourse(this.courseId).subscribe({
+    this.quizService.getQuizByCourse(this.courseId, this.selectedLevel).subscribe({
       next: (res: any) => {
         if (res && res.questions && res.questions.length > 0) {
           this.quiz = res;
           this.selectedAnswers = new Array(this.quiz.questions.length).fill(null);
           this.result = null;
-
-          // start timer
           this.startTimer(600);
         } else {
           this.quiz = null;
+          this.selectedAnswers = [];
+          this.result = null;
+          clearInterval(this.interval);
         }
       },
       error: (err) => {
         console.error('Error loading quiz:', err);
         this.quiz = null;
+        this.selectedAnswers = [];
+        this.result = null;
       }
     });
   }
@@ -68,10 +80,12 @@ export class CourseDetailComponent implements OnInit {
   startTimer(seconds: number): void {
     clearInterval(this.interval);
     this.timer = seconds;
+
     this.interval = setInterval(() => {
       if (this.timer > 0) {
         this.timer--;
       } else {
+        clearInterval(this.interval);
         this.submitQuiz();
       }
     }, 1000);
@@ -99,13 +113,18 @@ export class CourseDetailComponent implements OnInit {
     const timeTaken = 600 - this.timer;
     clearInterval(this.interval);
 
-    this.quizService.submitQuiz(this.courseId, this.selectedAnswers, timeTaken, userId)
+    this.quizService
+      .submitQuiz(this.courseId, this.selectedAnswers, timeTaken, userId)
       .subscribe({
-        next: (res) => {
+        next: (res: any) => {
           this.result = res;
           this.selectedAnswers = res.review.map((r: any) => r.yourAnswer);
         },
         error: (err) => console.error('Error submitting quiz:', err)
       });
+  }
+
+  ngOnDestroy(): void {
+    clearInterval(this.interval);
   }
 }
