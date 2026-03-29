@@ -1,17 +1,19 @@
-// home.component.ts
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule,RouterModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'] 
 })
 export class HomeComponent {
-  // Array of FAQ questions & answers
+
+  constructor(private router: Router) {}
+
+  // FAQ data
   faqs = [
     {
       question: '1. How do I create an account?',
@@ -41,9 +43,20 @@ export class HomeComponent {
   ];
 
   toggleFAQ(index: number) {
-    // toggle clicked, close others
     this.faqs.forEach((faq, i) => {
       faq.open = i === index ? !faq.open : false;
     });
+  }
+
+  // 🔥 PROTECT CATEGORIES CLICK
+  goToCategories(): void {
+    const token = localStorage.getItem('token');
+
+    if (token) {
+      this.router.navigate(['/categories']);
+    } else {
+      alert('⚠️ Please login first to access Categories.');
+      this.router.navigate(['/login']);
+    }
   }
 }
