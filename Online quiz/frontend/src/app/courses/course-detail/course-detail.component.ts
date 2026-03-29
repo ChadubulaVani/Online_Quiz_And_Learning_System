@@ -24,7 +24,7 @@ export class CourseDetailComponent implements OnInit, OnDestroy {
   timer: number = 600;
   interval: any;
 
-  selectedLevel: string = 'Easy';
+  correctAnswers: number = 0;
 
   constructor(
     private route: ActivatedRoute,
@@ -54,17 +54,19 @@ export class CourseDetailComponent implements OnInit, OnDestroy {
   }
 
   loadQuiz(): void {
-    this.quizService.getQuizByCourse(this.courseId, this.selectedLevel).subscribe({
+    this.quizService.getQuizByCourse(this.courseId).subscribe({
       next: (res: any) => {
         if (res && res.questions && res.questions.length > 0) {
           this.quiz = res;
           this.selectedAnswers = new Array(this.quiz.questions.length).fill(null);
           this.result = null;
+          this.correctAnswers = 0;
           this.startTimer(600);
         } else {
           this.quiz = null;
           this.selectedAnswers = [];
           this.result = null;
+          this.correctAnswers = 0;
           clearInterval(this.interval);
         }
       },
@@ -73,6 +75,7 @@ export class CourseDetailComponent implements OnInit, OnDestroy {
         this.quiz = null;
         this.selectedAnswers = [];
         this.result = null;
+        this.correctAnswers = 0;
       }
     });
   }
@@ -95,11 +98,6 @@ export class CourseDetailComponent implements OnInit, OnDestroy {
     this.selectedAnswers[questionIndex] = optionIndex;
   }
 
-  onLevelChange(): void {
-    clearInterval(this.interval);
-    this.loadQuiz();
-  }
-
   submitQuiz(): void {
     if (!this.quiz) return;
 
@@ -113,13 +111,21 @@ export class CourseDetailComponent implements OnInit, OnDestroy {
     const timeTaken = Math.max(0, 600 - this.timer);
     clearInterval(this.interval);
 
+    let correct = 0;
+    this.quiz.questions.forEach((question: any, index: number) => {
+      if (this.selectedAnswers[index] === question.correctAnswer) {
+        correct++;
+      }
+    });
+
+    this.correctAnswers = correct;
+
     this.quizService
       .submitQuiz(
         this.courseId,
         this.selectedAnswers,
         timeTaken,
-        userId,
-        this.selectedLevel
+        userId
       )
       .subscribe({
         next: (res: any) => {
